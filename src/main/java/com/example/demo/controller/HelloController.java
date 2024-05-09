@@ -20,7 +20,7 @@ public class HelloController {
         return student;
     }
 
-    @GetMapping("list")
+    @GetMapping("list3")
     public List<Student> list(){
         List<Student> list =new ArrayList<>();
         list.add(new Student("stu",1));
