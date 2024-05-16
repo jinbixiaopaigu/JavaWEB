@@ -51,4 +51,11 @@ public class StudentController {
         students.add(student);
         return "redirect:/list";
     }
+
+    @RequestMapping("/update/{id}")
+    public String update(@PathVariable String id, ModelMap map){
+        Student student=students.get(Integer.parseInt(id));
+        map.put("student",student);
+        return "update";
+    }
 }
