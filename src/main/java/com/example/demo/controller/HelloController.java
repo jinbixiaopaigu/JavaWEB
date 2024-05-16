@@ -16,15 +16,15 @@ public class HelloController {
 
     @GetMapping("stu")
     public Student stu(){
-        Student student =new Student("stu",1);
+        Student student =new Student("stu","1");
         return student;
     }
 
     @GetMapping("list3")
     public List<Student> list(){
         List<Student> list =new ArrayList<>();
-        list.add(new Student("stu",1));
-        list.add(new Student("ss",2));
+        list.add(new Student("stu","1"));
+        list.add(new Student("ss","2"));
         return list;
     }
 }
