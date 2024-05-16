@@ -33,7 +33,8 @@ public class StudentController {
     public String delete(@PathVariable String id){
 //        System.out.println("id:"+id);
         log.warn("id:"+(Integer.parseInt(id)-1)+"");
-        students.remove(Integer.parseInt(id)-1);
-        return "forward:/list";
+//        students.remove(Integer.parseInt(id)-1);
+        students.removeIf(student -> student.getId() == (Integer.parseInt(id)));
+        return "redirect:/list";
     }
 }
