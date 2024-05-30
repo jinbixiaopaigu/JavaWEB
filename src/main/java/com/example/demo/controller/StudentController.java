@@ -1,24 +1,26 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.Student;
+import com.example.demo.repository.StudentRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Controller
 public class StudentController {
     private static final Logger log = LoggerFactory.getLogger(StudentController.class);
+
+    @Autowired
+    private StudentRepository studentRepository;
+
+
     private static Map<String,Student> students=new HashMap<>();
     static {
         Student s = new Student("jinbi","1");
@@ -28,14 +30,13 @@ public class StudentController {
 
     @RequestMapping("list")
     public String list(ModelMap modelMap){
-        modelMap.put("students",students.values());
+        modelMap.put("students", studentRepository.findAll());
         return "list";
     }
 
     @RequestMapping("/delete/{id}")
     public String delete(@PathVariable String id){
-        log.warn("id:"+(Integer.parseInt(id)-1)+"");
-        students.remove(id);
+        studentRepository.deleteById(id);
         return "redirect:/list";
     }
 

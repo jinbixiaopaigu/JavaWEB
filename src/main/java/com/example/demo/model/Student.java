@@ -1,8 +1,17 @@
 package com.example.demo.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+
+@Entity
 public class Student {
     private String name;
+    @Id
     private String id;
+
+    public Student() {
+
+    }
 
     public String getName() {
         return name;
