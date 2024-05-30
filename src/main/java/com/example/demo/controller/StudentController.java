@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 @Controller
 public class StudentController {
@@ -48,15 +49,15 @@ public class StudentController {
     @RequestMapping("/save")
     public String save(Student student ){
         if(student.getId()==null){
-            student.setId(String.valueOf(students.size()+1));
+            student.setId(UUID.randomUUID().toString());
         }
-        students.put(student.getId(),student);
+        studentRepository.save(student);
         return "redirect:/list";
     }
 
     @RequestMapping("/update/{id}")
     public String update(@PathVariable String id, ModelMap map){
-        Student student=students.get(id);
+        Student student=studentRepository.getReferenceById(id);
         map.put("student",student);
         return "update";
     }
