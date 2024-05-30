@@ -24,9 +24,9 @@ public class StudentController {
 
     private static Map<String,Student> students=new HashMap<>();
     static {
-        Student s = new Student("jinbi","1");
+        Student s = new Student("jinbi","1",18);
         students.put(s.getId(),s);
-        students.put("2",new Student("yininbi","2"));
+        students.put("2",new Student("yininbi","2",24));
     }
 
     @RequestMapping("list")
