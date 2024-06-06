@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -27,6 +28,16 @@ public class StudentController {
         Student s = new Student("jinbi","1",18);
         students.put(s.getId(),s);
         students.put("2",new Student("yininbi","2",24));
+    }
+
+    @RequestMapping("search")
+    public String search(ModelMap map,String name,Integer age){
+        List<Student> students=studentRepository.findByNameAndAge(name,age);
+        for(Student s:students){
+            log.info("name:"+s.getName()+",id:"+s.getId());
+        }
+        map.put("students",students);
+        return "list";
     }
 
     @RequestMapping("list")
