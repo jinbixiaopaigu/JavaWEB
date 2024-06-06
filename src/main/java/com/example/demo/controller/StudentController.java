@@ -5,6 +5,7 @@ import com.example.demo.repository.StudentRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,8 +32,12 @@ public class StudentController {
     }
 
     @RequestMapping("search")
-    public String search(ModelMap map,String name,Integer age){
-        List<Student> students=studentRepository.findByNameAndAge(name,age);
+    public String search(ModelMap map,Student student){
+//        List<Student> students=studentRepository.findByNameOrAge(student.getName(),student.getAge());
+        if("".equals(student.getName())){
+            student.setName(null);
+        }
+        List<Student> students=studentRepository.findAll(Example.of(student));
         for(Student s:students){
             log.info("name:"+s.getName()+",id:"+s.getId());
         }
