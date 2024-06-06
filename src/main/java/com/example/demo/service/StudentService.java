@@ -31,4 +31,8 @@ public class StudentService {
     public void save(Student student) {
         studentRepository.save(student);
     }
+
+    public Student getReferenceById(String id) {
+        return studentRepository.getReferenceById(id);
+    }
 }

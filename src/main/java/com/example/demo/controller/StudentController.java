@@ -24,9 +24,6 @@ public class StudentController {
     @Autowired
     private StudentService studentService;
 
-    @Autowired
-    private StudentRepository studentRepository;
-
     private static Map<String,Student> students=new HashMap<>();
     static {
         Student s = new Student("jinbi","1",18);
@@ -40,14 +37,6 @@ public class StudentController {
             student.setName(null);
         }
 
-        // 预处理age字段
-        try {
-            if ("".equals(student.getAge())) {
-                student.setAge(null);
-            }
-        } catch (NumberFormatException e) {
-            student.setAge(null);
-        }
         modelMap.put("students", studentService.findAll(student));
         return "list";
     }
@@ -74,7 +63,7 @@ public class StudentController {
 
     @RequestMapping("/update/{id}")
     public String update(@PathVariable String id, ModelMap map){
-        Student student=studentRepository.getReferenceById(id);
+        Student student=studentService.getReferenceById(id);
         map.put("student",student);
         return "update";
     }
