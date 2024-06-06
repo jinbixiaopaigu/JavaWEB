@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.model.Student;
 import com.example.demo.repository.StudentRepository;
+import com.example.demo.service.StudentService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +22,10 @@ public class StudentController {
     private static final Logger log = LoggerFactory.getLogger(StudentController.class);
 
     @Autowired
-    private StudentRepository studentRepository;
+    private StudentService studentService;
 
+    @Autowired
+    private StudentRepository studentRepository;
 
     private static Map<String,Student> students=new HashMap<>();
     static {
@@ -31,29 +34,27 @@ public class StudentController {
         students.put("2",new Student("yininbi","2",24));
     }
 
-    @RequestMapping("search")
-    public String search(ModelMap map,Student student){
-//        List<Student> students=studentRepository.findByNameOrAge(student.getName(),student.getAge());
+    @RequestMapping("list")
+    public String list(ModelMap modelMap,Student student){
         if("".equals(student.getName())){
             student.setName(null);
         }
-        List<Student> students=studentRepository.findAll(Example.of(student));
-        for(Student s:students){
-            log.info("name:"+s.getName()+",id:"+s.getId());
-        }
-        map.put("students",students);
-        return "list";
-    }
 
-    @RequestMapping("list")
-    public String list(ModelMap modelMap){
-        modelMap.put("students", studentRepository.findAll());
+        // 预处理age字段
+        try {
+            if ("".equals(student.getAge())) {
+                student.setAge(null);
+            }
+        } catch (NumberFormatException e) {
+            student.setAge(null);
+        }
+        modelMap.put("students", studentService.findAll(student));
         return "list";
     }
 
     @RequestMapping("/delete/{id}")
     public String delete(@PathVariable String id){
-        studentRepository.deleteById(id);
+        studentService.deleteById(id);
         return "redirect:/list";
     }
 
@@ -67,7 +68,7 @@ public class StudentController {
         if(student.getId()==null){
             student.setId(UUID.randomUUID().toString());
         }
-        studentRepository.save(student);
+        studentService.save(student);
         return "redirect:/list";
     }
 
