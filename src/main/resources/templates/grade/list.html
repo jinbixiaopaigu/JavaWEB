@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Klass list</title>
+</head>
+<body>
+<form action="/grade/list" method="post">
+    <label>Name:</label>
+    <input type="text" name="name">
+    <label>Java:</label>
+    <input type="text" name="java">
+    <label>Python:</label>
+    <input type="text" name="python">
+    <label>C:</label>
+    <input type="text" name="c">
+    <input type="submit" value="Search">
+</form>
+<table border="1">
+    <tr>
+        <td>ID</td>
+        <td>Name</td>
+        <td>Java</td>
+        <td>Python</td>
+        <td>C</td>
+        <td>Action</td>
+    </tr>
+    <tr th:each="grade:${gradelist}">
+        <!--<td th:text="${name}"></td>-->
+        <td th:text="${grade.id}"></td>
+        <td th:text="${grade.name}"></td>
+        <td th:text="${grade.java}"></td>
+        <td th:text="${grade.python}"></td>
+        <td th:text="${grade.c}"></td>
+        <td><a th:href = "@{/grade/delete/{id}(id = ${grade.id})}">Delete</a></td>
+        <td><a th:href = "@{/grade/update/{id}(id = ${grade.id})}">Update</a></td>
+    </tr>
+</table>
+<div>
+    <a href ="/grade/create">Create</a>
+</div>
+</body>
+</html>

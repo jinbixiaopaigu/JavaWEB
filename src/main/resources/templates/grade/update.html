@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>update</title>
+</head>
+<body>
+    <form action="/grade/save" method="post">
+        <lable>ID</lable>
+        <input type="text" name="id" readonly th:value="${grade.id}">
+        <lable>Name</lable>
+        <input type="text" name="name" th:value="${grade.name}">
+        <lable>Java</lable>
+        <input type="text" name="java" th:value="${grade.java}">
+        <lable>Python</lable>
+        <input type="text" name="python" th:value="${grade.python}">
+        <lable>C</lable>
+        <input type="text" name="c" th:value="${grade.c}">
+        <input type="submit" value="更新">
+    </form>
+</body>
+</html>
